@@ -8,21 +8,19 @@
 
 #include <DNSServer.h>
 #include <WiFiManager.h>
-#include <DHT.h>
-#include <DHT_U.h>
+#include <DHT11.h>
 
 #define DHTTYPE DHT11
 
 const int PIN_AP = 2;
 const int DHTPIN = 27;
 
-DHT dht(DHTPIN, DHTTYPE);
+DHT11 dht11(DHTPIN);
 
 void setup()
 {
     Serial.begin(115200);
     pinMode(PIN_AP,INPUT);
-    dht.begin();
     WiFiManager wifiManager;
     wifiManager.autoConnect("GaboESP32","123456");
 }
@@ -39,7 +37,7 @@ void loop ()
         } 
 
         Serial.println("Estoy connectado a la red :D");
-        Serial.println (dht.readHumidity());
-        Serial.println (dht.readTemperature());
+        float temp,hum;
+        Serial.println (dht11.read(hum,temp));
     }    
 }
