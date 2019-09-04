@@ -9,6 +9,7 @@
 #include <DNSServer.h>
 #include <WiFiManager.h>
 #include <DHT11.h>
+#include <HTTPClient.h>
 
 #define DHTTYPE DHT11
 
@@ -36,8 +37,27 @@ void loop ()
             delay(1000);
         } 
 
-        Serial.println("Estoy connectado a la red :D");
-        float temp,hum;
-        Serial.println (dht11.read(hum,temp));
+        if (WiFi.status()== WL_CONNECTED)
+        {
+            HTTPClient http;
+            Serial.println("Estoy connectado a la red :D");
+            int err;
+            float temp,hum = 0.0;
+            if ((err = dht11.read(hum, temp))==0)
+            {
+                Serial.print ("Temperatura: ");
+                Serial.println (temp);
+                Serial.print ("Humedad: ");
+                Serial.println (hum);
+                http.begin("https://iot-apps-course.firebaseio.com/sensor.json");
+                http.addHeader("Content-Type","text/plain");
+                String payload = "{\"Temperature\":" + temp + ", \"Humidity\": }" + hum;
+                int httpCode = http.POST(payload);
+            }
+            else
+            {
+                Serial.println("Error del sensor :'(")
+            }
+        }   
     }    
 }
