@@ -51,12 +51,12 @@ void loop ()
                 Serial.println (hum);
                 http.begin("https://iot-apps-course.firebaseio.com/sensor.json");
                 http.addHeader("Content-Type","text/plain");
-                String payload = "{\"Temperature\":" + temp + ", \"Humidity\": }" + hum;
+                String payload = "{\"Temperature\":" + String(temp) + ", \"Humidity\": }" + String(hum);
                 int httpCode = http.POST(payload);
             }
             else
             {
-                Serial.println("Error del sensor :'(")
+                Serial.println("Error del sensor :'(");
             }
         }   
     }    
