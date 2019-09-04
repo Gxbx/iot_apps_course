@@ -15,12 +15,7 @@ void setup()
 {
     Serial.begin(115200);
     pinMode(PIN_AP,INPUT);
-
     WiFiManager wifiManager;
-
-    wifiManager.setAPCallback(configModeCallback(wifiManager));
-    wifiManager.setSaveConfigCallback(saveConfigCallback());
-
     wifiManager.autoConnect("GaboESP32","123456");
 }
 void loop ()
@@ -35,17 +30,4 @@ void loop ()
             delay(1000);
         } 
     }    
-}
-
-void configModeCallback (WifiManager *wiFiManager)
-{
-    Serial.println("Modo de configuración...");
-    Serial.println(WiFi.softAPIP());
-    Serial.println(wiFiManager->getConfigPortalSSID());
-}
-
-void saveConfigCallback ()
-{
-    Serial.println("Configuración guardada");
-    Serial.println(WiFi.softAPIP());
 }
