@@ -1,63 +1,47 @@
 #if defined(ESP8266)
-#include <ESP8266WiFi.h>
-#include <ESP8266WebServer.h>
+#include <ESP8266WiFi.h>          
 #else
-#include <WiFi.h>
-#include <WebServer.h>
+#include <WiFi.h>          
 #endif
 
 #include <DNSServer.h>
-#include <WiFiManager.h>
-#include <DHT11.h>
-#include <HTTPClient.h>
+#if defined(ESP8266)
+#include <ESP8266WebServer.h>
+#else
+#include <WebServer.h>
+#endif
+#include <WiFiManager.h> 
+#include <HTTPClient.h>   
+#include <DHT11.h>     
 
-#define DHTTYPE DHT11
-
-const int PIN_AP = 2;
 const int DHTPIN = 27;
-
 DHT11 dht11(DHTPIN);
-
-void setup()
-{
+HTTPClient http;
+void setup() {
     Serial.begin(115200);
-    pinMode(PIN_AP,INPUT);
     WiFiManager wifiManager;
-    wifiManager.autoConnect("GaboESP32","123456");
+    wifiManager.autoConnect("GaboESP32");
+    Serial.println("Estoy connectado a la red :D");
 }
-void loop ()
-{
-    WiFiManager wifiManager;
-    if (digitalRead(PIN_AP)== HIGH)
-    {
-        if (!wifiManager.startConfigPortal("GaboESP32","123456"))
-        {
-            delay(2000);
-            ESP.restart();
-            delay(1000);
-        } 
 
-        if (WiFi.status()== WL_CONNECTED)
-        {
-            HTTPClient http;
-            Serial.println("Estoy connectado a la red :D");
-            int err;
-            float temp,hum = 0.0;
-            if ((err = dht11.read(hum, temp))==0)
-            {
-                Serial.print ("Temperatura: ");
-                Serial.println (temp);
-                Serial.print ("Humedad: ");
-                Serial.println (hum);
-                http.begin("https://iot-apps-course.firebaseio.com/sensor.json");
-                http.addHeader("Content-Type","text/plain");
-                String payload = "{\"Temperature\":" + String(temp) + ", \"Humidity\": }" + String(hum);
-                int httpCode = http.POST(payload);
-            }
-            else
-            {
-                Serial.println("Error del sensor :'(");
-            }
-        }   
-    }    
+void loop() {  
+    float temp,hum = 0.0;
+    int err;
+    http.begin("https://iot-apps-course.firebaseio.com/data.json");
+    http.addHeader("Content-Type","text/plain");
+    if ((err = dht11.read(hum, temp))==0)
+    {
+        Serial.print ("Temperatura: ");
+        Serial.println (temp);
+        Serial.print ("Humedad: ");
+        Serial.println (hum);
+        String payload = "{\"Temperature\":" + String(temp) + ", \"Humidity\": " + String(hum)+"}";
+        int httpCode = http.POST(payload);
+        Serial.println(httpCode);
+        Serial.println(payload);
+        delay(3000);
+    }
+    else{
+        Serial.println("Error del sensor :'(");
+    }
 }
