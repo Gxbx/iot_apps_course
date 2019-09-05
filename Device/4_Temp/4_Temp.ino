@@ -13,7 +13,8 @@
 #include <WiFiManager.h> 
 #include <HTTPClient.h>   
 #include <DHT11.h>  
-#include <Servo.h>
+#include <ESP32_Servo.h>
+
     
 const int DHTPIN = 27;
 
