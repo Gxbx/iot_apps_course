@@ -4,7 +4,7 @@
 const char* ssid = "Emprendedores";
 const char* password = "AxtVvm13";
 const char* mqtt_broker = "192.168.1.197";
-const int pinCell = 5;
+const int pinCell = 36;
 
 WiFiClient wifi;
 PubSubClient client(wifi);
@@ -49,12 +49,12 @@ void reconnect()
         if (client.connect("ESP32"))
         {
             Serial.println("Estoy conectado :D");
-            client.suscribe("esp32/fotocell/output");
+            client.subscribe("esp32/fotocell/output");
         }
         else
         {
             Serial.print("conexión fallida :'/");
-            Serial.print(clint.state());
+            Serial.print(client.state());
             delay(3000);
         }   
     }  
@@ -80,7 +80,11 @@ void loop ()
     if (now - lasMsg >3000)
     {
         //Aqui el codigo de lectura de la fotocelda
-        client.publish("esp32/fotocell/output", "151653");
+        
+        char value[8];
+        dtostrf(analogRead(pinCell),1, 2, value);
+        //dtostrf()
+        client.publish("esp32/fotocell/output", value);
     }
     
     
