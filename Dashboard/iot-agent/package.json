@@ -1,0 +1,20 @@
+{
+    "name": "iot-agent",
+    "version": "0.0.1",
+    "main": "index.js",
+    "author": "Gabriel Rengifo",
+    "license": "MIT",
+    "scripts": {
+        "lint": "standard"
+    },
+    "dependencies": {
+        "debug": "^2.6.8",
+        "defaults": "^1.0.3",
+        "mqtt": "^2.9.0",
+        "uuid": "^3.1.0",
+        "pkg-dir": "^2.0.0"
+    },
+    "devDependencies": {
+        "standard": "10.0.2"
+    }
+}

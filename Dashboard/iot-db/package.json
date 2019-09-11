@@ -1,0 +1,17 @@
+{
+    "name": "iot-db",
+    "version": "0.0.1",
+    "main": "index.js",
+    "author": "Gabriel Rengifo",
+    "license": "MIT",
+    "scripts": {
+        "lint": "standard"
+    },
+    "dependencies": {
+        "bluebird": "^3.5.0",
+        "mongoose": "^4.11.1"
+    },
+    "devDependencies": {
+        "standard": "10.0.2"
+    }
+}

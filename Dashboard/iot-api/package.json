@@ -1,0 +1,22 @@
+{
+    "name": "iot-agent",
+    "version": "0.0.1",
+    "main": "server.js",
+    "author": "Gabriel Rengifo",
+    "license": "MIT",
+    "scripts": {
+        "start": "node server.js",
+        "lint": "standard"
+    },
+    "dependencies": {
+        "debug": "^2.6.8",
+        "express": "^4.15.3",
+        "express-asyncify": "^1.0.0",
+        "iot-agent": "file:../iot-agent/",
+        "iot-db": "file:../iot-db"
+    },
+    "devDependencies": {
+        "standard": "10.0.2",
+        "nodemon": "^1.11.0"
+    }
+}

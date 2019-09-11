@@ -1,4 +1,9 @@
 */.vscode
 .vscode
-/node_modules/*
+node_modules/*
 */node_modules
+node_modules/
+.npm
+logs
+*.log
+package-lock.*
