@@ -9,7 +9,7 @@
     },
     "dependencies": {
         "bluebird": "^3.5.0",
-        "mongoose": "^4.11.1"
+        "mongoose": "^5.7.8"
     },
     "devDependencies": {
         "standard": "10.0.2"
